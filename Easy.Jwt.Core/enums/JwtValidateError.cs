@@ -1,5 +1,4 @@
-﻿
-namespace Easy.Jwt.Core;
+﻿namespace Easy.Jwt.Core;
 
 /// <summary>
 /// enum for jwt validate error
