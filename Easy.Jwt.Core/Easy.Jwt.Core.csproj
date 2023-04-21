@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<NoWarn>1701;1702;CS1591;CS1573,CA2254;RCS1079;CS8618;IDE0022</NoWarn>
+		<TargetFramework>net7.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="8.0.0-preview.3.23174.8" />
+		<PackageReference Include="RSAExtensions" Version="1.1.1" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.29.0" />
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+</Project>
