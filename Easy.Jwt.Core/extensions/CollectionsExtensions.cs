@@ -5,20 +5,22 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 
-namespace Easy.Jwt.Core;
-
-internal static class CollectionsExtensions
+namespace Easy.Jwt.Core 
 {
 
-    [DebuggerStepThrough]
-    public static bool IsPresent<T>(this IEnumerable<T> list)
+    internal static class CollectionsExtensions
     {
-        return (list != null && list.Any());
-    }
 
-    [DebuggerStepThrough]
-    public static bool IsPresent<T>(this object? obj) where T : class
-    {
-        return obj != null;
+        [DebuggerStepThrough]
+        public static bool IsPresent<T>(this IEnumerable<T> list)
+        {
+            return (list != null && list.Any());
+        }
+
+        [DebuggerStepThrough]
+        public static bool IsPresent<T>(this object? obj) where T : class
+        {
+            return obj != null;
+        }
     }
 }

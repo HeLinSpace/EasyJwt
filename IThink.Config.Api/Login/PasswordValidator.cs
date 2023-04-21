@@ -1,5 +1,7 @@
 ﻿using Easy.Jwt.Core;
+using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace IThink.Config.Api.Login
 {

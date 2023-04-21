@@ -4,19 +4,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Easy.Jwt.Core;
-
-internal class CommonHelper
+namespace Easy.Jwt.Core
 {
-    /// <summary>
-    /// 生成新的Guid
-    /// </summary>
-    /// <returns></returns>
-    public static string NewGuid
+    internal class CommonHelper
     {
-        get
+        /// <summary>
+        /// 生成新的Guid
+        /// </summary>
+        /// <returns></returns>
+        public static string NewGuid
         {
-            return Guid.NewGuid().ToString("N").ToUpper();
+            get
+            {
+                return Guid.NewGuid().ToString("N").ToUpper();
+            }
         }
     }
 }
+

@@ -1,5 +1,6 @@
 ﻿using Easy.Jwt.Core;
 using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace IThink.Bi.Core.Validation
 {

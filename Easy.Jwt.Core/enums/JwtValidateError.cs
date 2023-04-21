@@ -1,28 +1,30 @@
 ﻿
-namespace Easy.Jwt.Core;
-
-/// <summary>
-/// enum for jwt validate error
-/// </summary>
-public enum JwtValidateError
+namespace Easy.Jwt.Core
 {
-    /// <summary>
-    /// 未知错误
-    /// </summary>
-    UnKnownError = 0,
 
     /// <summary>
-    /// 无效token
+    /// enum for jwt validate error
     /// </summary>
-    TokenError = 1,
+    public enum JwtValidateError
+    {
+        /// <summary>
+        /// 未知错误
+        /// </summary>
+        UnKnownError = 0,
 
-    /// <summary>
-    /// token过期
-    /// </summary>
-    ExpiredError = 2,
+        /// <summary>
+        /// 无效token
+        /// </summary>
+        TokenError = 1,
 
-    /// <summary>
-    /// replace a record
-    /// </summary>
-    AudienceError = 3,
+        /// <summary>
+        /// token过期
+        /// </summary>
+        ExpiredError = 2,
+
+        /// <summary>
+        /// replace a record
+        /// </summary>
+        AudienceError = 3,
+    }
 }

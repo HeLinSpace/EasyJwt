@@ -1,56 +1,32 @@
+using System;
 using System.Diagnostics;
 
-namespace Easy.Jwt.Core;
-
-internal static class StringUtils
+namespace Easy.Jwt.Core
 {
 
-    [DebuggerStepThrough]
-    public static bool IsMissing(this string value)
+    internal static class StringUtils
     {
-        return string.IsNullOrWhiteSpace(value);
-    }
 
-    [DebuggerStepThrough]
-    public static bool IsPresent(this string value)
-    {
-        return !string.IsNullOrWhiteSpace(value);
-    }
-
-    [DebuggerStepThrough]
-    public static bool IsMissingOrTooLong(this string value, int maxLength)
-    {
-        if (string.IsNullOrWhiteSpace(value))
+        [DebuggerStepThrough]
+        public static bool IsMissing(this string value)
         {
-            return true;
-        }
-        if (value.Length > maxLength)
-        {
-            return true;
+            return string.IsNullOrWhiteSpace(value);
         }
 
-        return false;
-    }
-
-    [DebuggerStepThrough]
-    public static bool IsLocalUrl(this string url)
-    {
-        if (string.IsNullOrEmpty(url))
+        [DebuggerStepThrough]
+        public static bool IsPresent(this string value)
         {
-            return false;
+            return !string.IsNullOrWhiteSpace(value);
         }
 
-        // Allows "/" or "/foo" but not "//" or "/\".
-        if (url[0] == '/')
+        [DebuggerStepThrough]
+        public static bool IsMissingOrTooLong(this string value, int maxLength)
         {
-            // url is exactly "/"
-            if (url.Length == 1)
+            if (string.IsNullOrWhiteSpace(value))
             {
                 return true;
             }
-
-            // url doesn't start with "//" or "/\"
-            if (url[1] != '/' && url[1] != '\\')
+            if (value.Length > maxLength)
             {
                 return true;
             }
@@ -58,29 +34,56 @@ internal static class StringUtils
             return false;
         }
 
-        // Allows "~/" or "~/foo" but not "~//" or "~/\".
-        if (url[0] == '~' && url.Length > 1 && url[1] == '/')
+        [DebuggerStepThrough]
+        public static bool IsLocalUrl(this string url)
         {
-            // url is exactly "~/"
-            if (url.Length == 2)
+            if (string.IsNullOrEmpty(url))
             {
-                return true;
+                return false;
             }
 
-            // url doesn't start with "~//" or "~/\"
-            if (url[2] != '/' && url[2] != '\\')
+            // Allows "/" or "/foo" but not "//" or "/\".
+            if (url[0] == '/')
             {
-                return true;
+                // url is exactly "/"
+                if (url.Length == 1)
+                {
+                    return true;
+                }
+
+                // url doesn't start with "//" or "/\"
+                if (url[1] != '/' && url[1] != '\\')
+                {
+                    return true;
+                }
+
+                return false;
+            }
+
+            // Allows "~/" or "~/foo" but not "~//" or "~/\".
+            if (url[0] == '~' && url.Length > 1 && url[1] == '/')
+            {
+                // url is exactly "~/"
+                if (url.Length == 2)
+                {
+                    return true;
+                }
+
+                // url doesn't start with "~//" or "~/\"
+                if (url[2] != '/' && url[2] != '\\')
+                {
+                    return true;
+                }
+
+                return false;
             }
 
             return false;
         }
 
-        return false;
-    }
-
-    public static bool EqualsIgnoreCase(this string a, string b)
-    {
-        return string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
+        public static bool EqualsIgnoreCase(this string a, string b)
+        {
+            return string.Equals(a, b, StringComparison.OrdinalIgnoreCase);
+        }
     }
 }

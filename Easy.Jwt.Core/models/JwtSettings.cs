@@ -1,42 +1,45 @@
 ﻿using Microsoft.IdentityModel.Tokens;
+using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace Easy.Jwt.Core;
-
-public class JwtSettings
+namespace Easy.Jwt.Core
 {
-    /// <summary>
-    /// default in payload
-    /// </summary>
-    public IEnumerable<Claim> DefaultClaims { get; set; }
 
-    /// <summary>
-    /// issuer
-    /// </summary>
-    public string Issuer { get; set; }
+    public class JwtSettings
+    {
+        /// <summary>
+        /// default in payload
+        /// </summary>
+        public IEnumerable<Claim> DefaultClaims { get; set; }
 
-    /// <summary>
-    /// audience
-    /// </summary>
-    public string Audience { get; set; }
+        /// <summary>
+        /// issuer
+        /// </summary>
+        public string Issuer { get; set; }
 
-    /// <summary>
-    /// expires on（seconds），default 8 hours
-    /// </summary>
-    public int Expires { get; set; } = 28800;
+        /// <summary>
+        /// audience
+        /// </summary>
+        public string Audience { get; set; }
 
-    /// <summary>
-    /// the certificate to generate jwt. if not configured, rsa will be used
-    /// </summary>
-    public SigningCredentials Credentials { get; set; }
+        /// <summary>
+        /// expires on（seconds），default 8 hours
+        /// </summary>
+        public int Expires { get; set; } = 28800;
 
-    /// <summary>
-    /// the rsa private key .if not configured, use default
-    /// </summary>
-    public string PrivateKey { get; set; }
+        /// <summary>
+        /// the certificate to generate jwt. if not configured, rsa will be used
+        /// </summary>
+        public SigningCredentials Credentials { get; set; }
 
-    /// <summary>
-    /// token类型 default Bearer
-    /// </summary>
-    public string TokenType { get; set; } = "Bearer";
+        /// <summary>
+        /// the rsa private key .if not configured, use default
+        /// </summary>
+        public string PrivateKey { get; set; }
+
+        /// <summary>
+        /// token类型 default Bearer
+        /// </summary>
+        public string TokenType { get; set; } = "Bearer";
+    }
 }

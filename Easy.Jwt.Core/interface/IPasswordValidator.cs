@@ -1,5 +1,10 @@
-﻿namespace Easy.Jwt.Core;
-public interface IPasswordValidator
+﻿using System.Threading.Tasks;
+
+namespace Easy.Jwt.Core
 {
-    Task<bool> ValidateAsync(PasswordValidationContext context);
+
+    public interface IPasswordValidator
+    {
+        Task<bool> ValidateAsync(PasswordValidationContext context);
+    }
 }

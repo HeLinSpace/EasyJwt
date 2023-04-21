@@ -6,33 +6,34 @@ using System.Linq;
 
 #pragma warning disable 1591
 
-namespace Easy.Jwt.Core;
-
-public static class IReadableStringCollectionExtensions
+namespace Easy.Jwt.Core
 {
-    [DebuggerStepThrough]
-    public static NameValueCollection AsNameValueCollection(this IEnumerable<KeyValuePair<string, StringValues>> collection)
+    public static class IReadableStringCollectionExtensions
     {
-        var nv = new NameValueCollection();
-
-        foreach (var field in collection)
+        [DebuggerStepThrough]
+        public static NameValueCollection AsNameValueCollection(this IEnumerable<KeyValuePair<string, StringValues>> collection)
         {
-            nv.Add(field.Key, field.Value.First());
+            var nv = new NameValueCollection();
+
+            foreach (var field in collection)
+            {
+                nv.Add(field.Key, field.Value.First());
+            }
+
+            return nv;
         }
 
-        return nv;
-    }
-
-    [DebuggerStepThrough]
-    public static NameValueCollection AsNameValueCollection(this IDictionary<string, StringValues> collection)
-    {
-        var nv = new NameValueCollection();
-
-        foreach (var field in collection)
+        [DebuggerStepThrough]
+        public static NameValueCollection AsNameValueCollection(this IDictionary<string, StringValues> collection)
         {
-            nv.Add(field.Key, field.Value.First());
-        }
+            var nv = new NameValueCollection();
 
-        return nv;
+            foreach (var field in collection)
+            {
+                nv.Add(field.Key, field.Value.First());
+            }
+
+            return nv;
+        }
     }
 }

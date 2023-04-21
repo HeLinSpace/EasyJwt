@@ -1,7 +1,11 @@
 ﻿using IThink.Bi.Core.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Net.Http;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace Easy.Jwt.Core
 {
