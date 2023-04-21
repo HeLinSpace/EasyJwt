@@ -4,6 +4,13 @@
 		<NoWarn>1701;1702;CS1591;CS1573,CA2254;RCS1079;CS8618;IDE0022</NoWarn>
 		<TargetFramework>net7.0</TargetFramework>
 		<ImplicitUsings>enable</ImplicitUsings>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Title>EasyJwt</Title>
+		<Authors>helin</Authors>
+		<PackageProjectUrl>https://github.com/HeLinSpace/EasyJwt</PackageProjectUrl>
+		<RepositoryUrl>https://github.com/HeLinSpace/EasyJwt</RepositoryUrl>
+		<IncludeSymbols>True</IncludeSymbols>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 
 	<ItemGroup>
@@ -12,6 +19,13 @@
 		<PackageReference Include="RSAExtensions" Version="1.1.1" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.29.0" />
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="..\README.md">
+	    <Pack>True</Pack>
+	    <PackagePath>\</PackagePath>
+	  </None>
 	</ItemGroup>
 
 </Project>
