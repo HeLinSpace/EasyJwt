@@ -2,6 +2,8 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
 
 namespace Easy.Jwt.Core;
 
@@ -19,13 +21,27 @@ public static class JWTHelper
     /// <param name="audience"></param>
     /// <param name="expires"></param>
     /// <returns></returns>
-    public static string GetJwtToken(string private_key, IEnumerable<Claim> claims, string? issuer, string? audience, int expires, out DateTime expiresAt)
+    public static string GetJwtTokenRS256(string private_key, IEnumerable<Claim> claims, string? issuer, string? audience, int expires, out DateTime expiresAt)
     {
         var rsa = RSA.Create();
         rsa.FromXmlString(RSAHelper.ToXmlPrivateKey(private_key));
         SecurityKey securityKey = new RsaSecurityKey(rsa);
 
         return GetJwtToken(new SigningCredentials(securityKey, SecurityAlgorithms.RsaSha256), claims, issuer, audience, expires, out expiresAt);
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="credentials"></param>
+    /// <param name="claims"></param>
+    /// <param name="issuer"></param>
+    /// <param name="audience"></param>
+    /// <param name="expires"></param>
+    /// <returns></returns>
+    public static string GetJwtTokenHS256(SymmetricSecurityKey symmetricSecurityKey, IEnumerable<Claim> claims, string? issuer, string? audience, int expires, out DateTime expiresAt)
+    {
+        return GetJwtToken(new SigningCredentials(symmetricSecurityKey, SecurityAlgorithms.HmacSha256), claims, issuer, audience, expires, out expiresAt);
     }
 
     /// <summary>
@@ -113,7 +129,36 @@ public static class JWTHelper
         return CreateRsaProviderFromPublicKey(publicKey);
     }
 
-    public static JwtValidateResult VerifyJwtToken(string token, string publicKey)
+    /// <summary>
+    /// RSA
+    /// </summary>
+    /// <param name="token"></param>
+    /// <param name="issuerSigningKey"></param>
+    /// <returns></returns>
+    public static JwtValidateResult VerifyJwtToken(string token, string issuerSigningKey)
+    {
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(issuerSigningKey));
+        return VerifyJwtToken(token, key);
+    }
+
+    /// <summary>
+    /// RSA
+    /// </summary>
+    /// <param name="token"></param>
+    /// <param name="publicKey"></param>
+    /// <returns></returns>
+    public static JwtValidateResult VerifyJwtTokenRSA(string token, string publicKey)
+    {
+        return VerifyJwtToken(token, new RsaSecurityKey(CreateRsaProviderFromPublicKey(publicKey)));
+    }
+
+    /// <summary>
+    /// RSA
+    /// </summary>
+    /// <param name="token"></param>
+    /// <param name="publicKey"></param>
+    /// <returns></returns>
+    public static JwtValidateResult VerifyJwtToken(string token, SecurityKey key)
     {
         var result = new JwtValidateResult();
 
@@ -126,7 +171,7 @@ public static class JWTHelper
             ValidateIssuerSigningKey = true,
             ValidIssuer = "ithink.bi",
             ValidAudience = "ithink.bi",
-            IssuerSigningKey = new RsaSecurityKey(CreateRsaProviderFromPublicKey(publicKey)),
+            IssuerSigningKey = key,
 
             ClockSkew = TimeSpan.Zero//校验过期时间必须加此属性
         };

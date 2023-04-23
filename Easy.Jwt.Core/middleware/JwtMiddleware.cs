@@ -1,7 +1,9 @@
 ﻿using IThink.Bi.Core.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using System.Text;
 
 namespace Easy.Jwt.Core;
 
@@ -91,9 +93,11 @@ internal class JwtMiddleware
 
             DateTime expiresAt;
 
-            if (jwtSettings.Credentials != null)
+            if (jwtSettings.IssuerSigningKey.IsPresent())
             {
-                token = JWTHelper.GetJwtToken(jwtSettings.Credentials, resultClaims, issuer, audience, jwtSettings.Expires, out expiresAt);
+                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.IssuerSigningKey));
+
+                token = JWTHelper.GetJwtTokenHS256(key, resultClaims, issuer, audience, jwtSettings.Expires, out expiresAt);
                 result.AccessToken = token;
                 result.ExpiresAt = expiresAt;
                 result.TokenType = jwtSettings.TokenType;
@@ -101,7 +105,7 @@ internal class JwtMiddleware
             }
             else if (jwtSettings.PrivateKey.IsPresent())
             {
-                token = JWTHelper.GetJwtToken(jwtSettings.PrivateKey, resultClaims, issuer, audience, jwtSettings.Expires, out expiresAt);
+                token = JWTHelper.GetJwtTokenRS256(jwtSettings.PrivateKey, resultClaims, issuer, audience, jwtSettings.Expires, out expiresAt);
                 result.AccessToken = token;
                 result.ExpiresAt = expiresAt;
                 result.TokenType = jwtSettings.TokenType;
