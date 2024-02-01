@@ -4,7 +4,6 @@ using System.Security.Claims;
 
 namespace Easy.Jwt.Core
 {
-
     public class JwtSettings
     {
         /// <summary>
@@ -28,9 +27,9 @@ namespace Easy.Jwt.Core
         public int Expires { get; set; } = 28800;
 
         /// <summary>
-        /// the certificate to generate jwt. if not configured, rsa will be used
+        /// the security key to generate jwt. if not configured, rsa will be used
         /// </summary>
-        public SigningCredentials Credentials { get; set; }
+        public string IssuerSigningKey { get; set; }
 
         /// <summary>
         /// the rsa private key .if not configured, use default

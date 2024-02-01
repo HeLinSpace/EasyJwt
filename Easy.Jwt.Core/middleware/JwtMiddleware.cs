@@ -1,10 +1,12 @@
 ﻿using IThink.Bi.Core.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Easy.Jwt.Core
@@ -95,9 +97,11 @@ namespace Easy.Jwt.Core
 
                 DateTime expiresAt;
 
-                if (jwtSettings.Credentials != null)
+                if (jwtSettings.IssuerSigningKey.IsPresent())
                 {
-                    token = JWTHelper.GetJwtToken(jwtSettings.Credentials, resultClaims, issuer, audience, jwtSettings.Expires, out expiresAt);
+                    var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.IssuerSigningKey));
+
+                    token = JWTHelper.GetJwtTokenHS256(key, resultClaims, issuer, audience, jwtSettings.Expires, out expiresAt);
                     result.AccessToken = token;
                     result.ExpiresAt = expiresAt;
                     result.TokenType = jwtSettings.TokenType;
@@ -105,7 +109,7 @@ namespace Easy.Jwt.Core
                 }
                 else if (jwtSettings.PrivateKey.IsPresent())
                 {
-                    token = JWTHelper.GetJwtToken(jwtSettings.PrivateKey, resultClaims, issuer, audience, jwtSettings.Expires, out expiresAt);
+                    token = JWTHelper.GetJwtTokenRS256(jwtSettings.PrivateKey, resultClaims, issuer, audience, jwtSettings.Expires, out expiresAt);
                     result.AccessToken = token;
                     result.ExpiresAt = expiresAt;
                     result.TokenType = jwtSettings.TokenType;
@@ -119,6 +123,16 @@ namespace Easy.Jwt.Core
             else
             {
                 result.Error = JwtConsts.JwtGenerateError.InvalidUsernameOrPassword;
+                if (validationContext.CustomResponse != null && validationContext.CustomResponse.TryGetValue("error", out var error))
+                {
+                    var errorMsg = Convert.ToString(error);
+                    if (!string.IsNullOrEmpty(errorMsg))
+                    {
+                        result.Error = errorMsg;
+                    }
+                    validationContext.CustomResponse.Remove("error");
+                }
+
                 result.Custom = validationContext.CustomResponse;
             }
 
