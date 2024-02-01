@@ -33,6 +33,7 @@ namespace Easy.Jwt.Core
         /// <returns></returns>
         public static IApplicationBuilder UseEasyJwt(this IApplicationBuilder app)
         {
+            app.UseCors("CorsPolicy");
             app.Map("/connect/token", builder =>
             {
                 Validate(app);
