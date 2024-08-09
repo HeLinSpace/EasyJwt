@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 
-namespace IThink.Bi.Core.Validation
+namespace Easy.Jwt.Core.Validation
 {
     internal class RequestValidation : IRequestValidation
     {

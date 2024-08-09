@@ -1,4 +1,4 @@
-﻿using IThink.Bi.Core.Validation;
+﻿using Easy.Jwt.Core.Validation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;

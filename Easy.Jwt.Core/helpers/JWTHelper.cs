@@ -135,10 +135,10 @@ public static class JWTHelper
     /// <param name="token"></param>
     /// <param name="issuerSigningKey"></param>
     /// <returns></returns>
-    public static JwtValidateResult VerifyJwtToken(string token, string issuerSigningKey)
+    public static JwtValidateResult VerifyJwtToken(string token, string issuerSigningKey, string issuer, string audience)
     {
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(issuerSigningKey));
-        return VerifyJwtToken(token, key);
+        return VerifyJwtToken(token, key, issuer, audience);
     }
 
     /// <summary>
@@ -147,9 +147,9 @@ public static class JWTHelper
     /// <param name="token"></param>
     /// <param name="publicKey"></param>
     /// <returns></returns>
-    public static JwtValidateResult VerifyJwtTokenRSA(string token, string publicKey)
+    public static JwtValidateResult VerifyJwtTokenRSA(string token, string publicKey, string issuer, string audience)
     {
-        return VerifyJwtToken(token, new RsaSecurityKey(CreateRsaProviderFromPublicKey(publicKey)));
+        return VerifyJwtToken(token, new RsaSecurityKey(CreateRsaProviderFromPublicKey(publicKey)),  issuer,  audience);
     }
 
     /// <summary>
@@ -158,7 +158,7 @@ public static class JWTHelper
     /// <param name="token"></param>
     /// <param name="publicKey"></param>
     /// <returns></returns>
-    public static JwtValidateResult VerifyJwtToken(string token, SecurityKey key)
+    public static JwtValidateResult VerifyJwtToken(string token, SecurityKey key, string issuer, string audience)
     {
         var result = new JwtValidateResult();
 
@@ -169,8 +169,8 @@ public static class JWTHelper
             ValidateAudience = true,
             ValidateIssuer = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = "ithink.bi",
-            ValidAudience = "ithink.bi",
+            ValidIssuer = issuer,
+            ValidAudience = audience,
             IssuerSigningKey = key,
 
             ClockSkew = TimeSpan.Zero//校验过期时间必须加此属性

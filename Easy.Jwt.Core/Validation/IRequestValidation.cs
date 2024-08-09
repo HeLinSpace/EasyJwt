@@ -1,7 +1,7 @@
 ﻿using Easy.Jwt.Core;
 using Microsoft.AspNetCore.Http;
 
-namespace IThink.Bi.Core.Validation
+namespace Easy.Jwt.Core.Validation
 {
     internal interface IRequestValidation
     {
