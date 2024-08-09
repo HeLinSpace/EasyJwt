@@ -20,8 +20,8 @@ namespace Easy.Jwt.Core
             var settings = new JwtSettings();
             configure?.Invoke(settings);
             serviceCollection.AddSingleton(settings);
-            serviceCollection.AddTransient<IRequestValidation, RequestValidation>();
-            serviceCollection.AddTransient<IPasswordValidator, T>();
+            serviceCollection.AddScoped<IRequestValidation, RequestValidation>();
+            serviceCollection.AddScoped<IPasswordValidator, T>();
 
             return serviceCollection;
         }
