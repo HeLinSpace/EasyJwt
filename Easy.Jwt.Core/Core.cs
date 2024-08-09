@@ -45,18 +45,21 @@ namespace Easy.Jwt.Core
 
         private static void Validate(IApplicationBuilder app)
         {
-            var requestValidations = app.ApplicationServices.GetService<IRequestValidation>();
-            var passwordValidators = app.ApplicationServices.GetService<IPasswordValidator>();
-            var jwtSettings = app.ApplicationServices.GetService<JwtSettings>();
-
-            if (requestValidations == null || jwtSettings == null)
+            using (var scope = app.ApplicationServices.CreateScope())
             {
-                throw new InvalidOperationException(JwtConsts.JwtGenerateError.InitError);
-            }
+                var requestValidations = scope.ServiceProvider.GetService<IRequestValidation>();
+                var passwordValidators = scope.ServiceProvider.GetService<IPasswordValidator>();
+                var jwtSettings = scope.ServiceProvider.GetService<JwtSettings>();
 
-            if (passwordValidators == null)
-            {
-                throw new InvalidOperationException(JwtConsts.JwtGenerateError.PasswordValidatorNotImplementedError);
+                if (requestValidations == null || jwtSettings == null)
+                {
+                    throw new InvalidOperationException(JwtConsts.JwtGenerateError.InitError);
+                }
+
+                if (passwordValidators == null)
+                {
+                    throw new InvalidOperationException(JwtConsts.JwtGenerateError.PasswordValidatorNotImplementedError);
+                }
             }
         }
     }
