@@ -1,5 +1,5 @@
-﻿using Easy.Jwt.Core;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
 
 namespace Easy.Jwt.Core.Validation
 {

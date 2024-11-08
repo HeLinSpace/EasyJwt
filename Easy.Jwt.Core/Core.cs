@@ -1,6 +1,7 @@
 ﻿using Easy.Jwt.Core.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Easy.Jwt.Core
 {
@@ -12,13 +13,21 @@ namespace Easy.Jwt.Core
         /// <param name="serviceCollection"></param>
         /// <param name="configure"></param>
         /// <returns></returns>
-        public static IServiceCollection AddEasyJwt<T>(this IServiceCollection serviceCollection, Action<JwtSettings>? configure = null) where T : class, IPasswordValidator
+        public static IServiceCollection AddEasyJwt<T>(this IServiceCollection serviceCollection, Action<JwtSettings> configure = null) where T : class, IPasswordValidator
         {
-            var settings = new JwtSettings();
+            var settings = new JwtSettings
+            {
+                Audience = "*",
+                Issuer = "*",
+                Expires = 28800,
+                TokenType = "Bearer"
+            };
+
             configure?.Invoke(settings);
             serviceCollection.AddSingleton(settings);
             serviceCollection.AddScoped<IRequestValidation, RequestValidation>();
             serviceCollection.AddScoped<IPasswordValidator, T>();
+            serviceCollection.AddScoped<ITokenGenerator, JWTGenerator>();
 
             return serviceCollection;
         }

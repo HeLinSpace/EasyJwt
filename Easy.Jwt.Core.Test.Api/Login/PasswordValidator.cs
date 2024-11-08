@@ -1,7 +1,8 @@
-﻿using Easy.Jwt.Core;
+﻿using System.Collections.Generic;
 using System.Security.Claims;
+using System.Threading.Tasks;
 
-namespace IThink.Config.Api.Login
+namespace Easy.Jwt.Core.Test.Api
 {
     public class PasswordValidator : IPasswordValidator
     {
@@ -9,7 +10,7 @@ namespace IThink.Config.Api.Login
         {
             // do some thing 
 
-            context.CustomClaims = new List<System.Security.Claims.Claim>
+            context.CustomClaims = new List<Claim>
             {
                 new Claim(JwtClaimTypes.Id,"id")
             };
