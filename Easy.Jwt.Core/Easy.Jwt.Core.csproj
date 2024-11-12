@@ -11,7 +11,7 @@
 		<RepositoryUrl>https://github.com/HeLinSpace/EasyJwt</RepositoryUrl>
 		<IncludeSymbols>True</IncludeSymbols>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>8.0.4</Version>
+		<Version>8.0.3.1</Version>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
