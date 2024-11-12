@@ -1,4 +1,4 @@
-﻿using h.general.extensions;
+﻿using Easy.Jwt.Core.Extensions;
 using System;
 using System.Net;
 using System.Net.Http;

@@ -1,5 +1,4 @@
-﻿using h.general.extensions;
-using h.general.tools;
+﻿using Easy.Jwt.Core.Extensions;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Text.Json.Serialization;

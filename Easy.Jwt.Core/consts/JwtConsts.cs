@@ -15,6 +15,7 @@ namespace Easy.Jwt.Core
             public const string InvalidRequest = "invalid request, only post is allowed .";
             public const string InvalidRequestData = "invalid request, only fromform or frombody is allowed .";
             public const string InvalidClientIdOrClientSecret = "invalid client_id or client_secret .";
+            public const string NullOrEmptyError = "{0} can not be null .";
         }
 
         internal struct RequestKey

@@ -1,6 +1,5 @@
-﻿using Easy.Jwt.Core.Validation;
-using h.general.exception;
-using h.general.extensions;
+﻿using Easy.Jwt.Core.Extensions;
+using Easy.Jwt.Core.Validation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;

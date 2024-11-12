@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Easy.Jwt.Core.Extensions;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using System.Collections.Specialized;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using h.general.extensions;
 
 namespace Easy.Jwt.Core.Validation
 {

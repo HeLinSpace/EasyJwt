@@ -4,11 +4,9 @@ using System.Collections.Specialized;
 using System.Diagnostics;
 using System.Linq;
 
-#pragma warning disable 1591
-
 namespace Easy.Jwt.Core
 {
-    public static class IReadableStringCollectionExtensions
+    internal static class IReadableStringCollectionExtensions
     {
         [DebuggerStepThrough]
         public static NameValueCollection AsNameValueCollection(this IEnumerable<KeyValuePair<string, StringValues>> collection)

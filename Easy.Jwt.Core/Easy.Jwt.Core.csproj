@@ -55,10 +55,4 @@
 			<PackagePath>\</PackagePath>
 		</None>
 	</ItemGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\..\h.general\h.general.csproj">
-		</ProjectReference>
-	</ItemGroup>
-
 </Project>

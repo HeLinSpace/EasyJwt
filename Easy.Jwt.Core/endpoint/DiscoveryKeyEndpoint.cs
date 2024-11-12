@@ -1,5 +1,4 @@
-﻿using h.general.extensions;
-using h.general.tools;
+﻿using Easy.Jwt.Core.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.IdentityModel.Tokens;
 using System;

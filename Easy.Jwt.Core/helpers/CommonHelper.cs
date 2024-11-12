@@ -8,7 +8,7 @@ using System.Security.Cryptography.X509Certificates;
 namespace Easy.Jwt.Core
 {
 
-    public static class CommonHelper
+    internal static class CommonHelper
     {
         private static readonly RandomNumberGenerator Rng = RandomNumberGenerator.Create();
 
