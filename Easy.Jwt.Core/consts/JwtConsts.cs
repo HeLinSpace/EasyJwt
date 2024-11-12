@@ -11,6 +11,7 @@ namespace Easy.Jwt.Core
             public const string PasswordValidatorNotImplementedError = "inject a custom implementation of the IPasswordValidator into the ioc container first .";
             public const string CredentialError = "configuration error: Please call the method serviceCollection.AddEasyJwt() to set the SigningCredentials or PrivateKey(RSAHelper.Generate() may help you) .";
             public const string UsernameEmptyError = "username can not be null .";
+            public const string PasswordValidateError = "password validate fail .";
             public const string InvalidRequest = "invalid request, only post is allowed .";
             public const string InvalidRequestData = "invalid request, only fromform or frombody is allowed .";
             public const string InvalidClientIdOrClientSecret = "invalid client_id or client_secret .";

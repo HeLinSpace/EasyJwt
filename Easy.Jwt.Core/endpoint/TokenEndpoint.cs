@@ -45,7 +45,7 @@ namespace Easy.Jwt.Core
             }
             else
             {
-                tokenResult.Error = JwtConsts.JwtGenerateError.UsernameEmptyError;
+                tokenResult.Error = JwtConsts.JwtGenerateError.PasswordValidateError;
                 tokenResult.Custom = validationContext.CustomResponse;
             }
 
