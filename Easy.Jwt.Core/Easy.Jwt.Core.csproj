@@ -13,6 +13,8 @@
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<Version>8.0.3</Version>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
 	</PropertyGroup>
 
 	<ItemGroup>
