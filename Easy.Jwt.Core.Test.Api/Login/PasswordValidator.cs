@@ -9,6 +9,11 @@ namespace Easy.Jwt.Core.Test.Api
         public async Task<bool> ValidateAsync(PasswordValidationContext context)
         {
             // do some thing 
+            if (string.IsNullOrEmpty(context.Password)) 
+            {
+                context.CustomResponse = new Dictionary<string, object> { { "status", 400 } };
+                return false;
+            }
 
             context.CustomClaims = new List<Claim>
             {
