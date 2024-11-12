@@ -13,7 +13,7 @@ namespace Easy.Jwt.Core
     {
         protected readonly JwtSettings _jwtSettings;
 
-        protected readonly string[] _defaultClaims = new string[] { JwtClaimTypes.Subject, JwtClaimTypes.AuthenticationTime, JwtClaimTypes.Expiration, JwtClaimTypes.NotBefore, JwtClaimTypes.Issuer, JwtClaimTypes.Audience, ClaimTypes.NameIdentifier };
+        protected readonly string[] _defaultClaims = new string[] { JwtClaimTypes.AuthenticationTime, JwtClaimTypes.Expiration, JwtClaimTypes.NotBefore, JwtClaimTypes.Issuer, JwtClaimTypes.Audience, JwtClaimTypes.JwtId };
 
         public JWTGenerator(JwtSettings jwtSettings)
         {
