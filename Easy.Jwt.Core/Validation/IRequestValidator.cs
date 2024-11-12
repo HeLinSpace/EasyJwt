@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Easy.Jwt.Core.Validation
 {
-    internal interface IRequestValidation
+    internal interface IRequestValidator
     {
         /// <summary>
         /// Processes the validation.

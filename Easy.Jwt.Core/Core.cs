@@ -1,4 +1,6 @@
 ﻿using Easy.Jwt.Core.Validation;
+using h.general.exception;
+using h.general.extensions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 using System;
@@ -13,21 +15,28 @@ namespace Easy.Jwt.Core
         /// <param name="serviceCollection"></param>
         /// <param name="configure"></param>
         /// <returns></returns>
-        public static IServiceCollection AddEasyJwt<T>(this IServiceCollection serviceCollection, Action<JwtSettings> configure = null) where T : class, IPasswordValidator
+        public static IServiceCollection AddEasyJwtServer<T>(this IServiceCollection serviceCollection, Action<JwtSettings> configure = null) where T : class, IPasswordValidator
         {
             var settings = new JwtSettings
             {
-                Audience = "*",
                 Issuer = "*",
                 Expires = 28800,
                 TokenType = "Bearer"
             };
 
             configure?.Invoke(settings);
+
+            BusinessException.Throw(settings.Clients.IsEmpty(), "no client hear .");
+
             serviceCollection.AddSingleton(settings);
-            serviceCollection.AddScoped<IRequestValidation, RequestValidation>();
+            serviceCollection.AddScoped<IRequestValidator, RequestValidation>();
             serviceCollection.AddScoped<IPasswordValidator, T>();
             serviceCollection.AddScoped<ITokenGenerator, JWTGenerator>();
+
+            serviceCollection.AddScoped<IEndpointRouter, EndpointRouter>();
+            serviceCollection.AddScoped<IEndpointHandler, TokenEndpoint>();
+            serviceCollection.AddScoped<IEndpointHandler, DiscoveryEndpoint>();
+            serviceCollection.AddScoped<IEndpointHandler, DiscoveryKeyEndpoint>();
 
             return serviceCollection;
         }
@@ -39,32 +48,27 @@ namespace Easy.Jwt.Core
         /// <returns></returns>
         public static IApplicationBuilder UseEasyJwt(this IApplicationBuilder app)
         {
-            app.Map("/connect/token", builder =>
-            {
-                Validate(app);
-                builder.UseMiddleware<JwtMiddleware>();
-            });
+            Validate(app);
+            app.UseMiddleware<JwtMiddleware>();
 
             return app;
         }
 
         private static void Validate(IApplicationBuilder app)
         {
-            using (var scope = app.ApplicationServices.CreateScope())
+            using var scope = app.ApplicationServices.CreateScope();
+            var requestValidations = scope.ServiceProvider.GetService<IRequestValidator>();
+            var passwordValidators = scope.ServiceProvider.GetService<IPasswordValidator>();
+            var jwtSettings = scope.ServiceProvider.GetService<JwtSettings>();
+
+            if (requestValidations == null || jwtSettings == null)
             {
-                var requestValidations = scope.ServiceProvider.GetService<IRequestValidation>();
-                var passwordValidators = scope.ServiceProvider.GetService<IPasswordValidator>();
-                var jwtSettings = scope.ServiceProvider.GetService<JwtSettings>();
+                throw new InvalidOperationException(JwtConsts.JwtGenerateError.InitError);
+            }
 
-                if (requestValidations == null || jwtSettings == null)
-                {
-                    throw new InvalidOperationException(JwtConsts.JwtGenerateError.InitError);
-                }
-
-                if (passwordValidators == null)
-                {
-                    throw new InvalidOperationException(JwtConsts.JwtGenerateError.PasswordValidatorNotImplementedError);
-                }
+            if (passwordValidators == null)
+            {
+                throw new InvalidOperationException(JwtConsts.JwtGenerateError.PasswordValidatorNotImplementedError);
             }
         }
     }

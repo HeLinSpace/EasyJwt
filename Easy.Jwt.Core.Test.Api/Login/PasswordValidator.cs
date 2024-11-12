@@ -12,7 +12,9 @@ namespace Easy.Jwt.Core.Test.Api
 
             context.CustomClaims = new List<Claim>
             {
-                new Claim(JwtClaimTypes.Id,"id")
+                new (JwtClaimTypes.Id,"id"),
+                new ("Username","Username"),
+
             };
             context.CustomResponse = new Dictionary<string, object> { { "status", 200 } };
 

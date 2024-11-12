@@ -1,10 +1,18 @@
-﻿using Easy.Jwt.Core.Validation;
+﻿/* ---------------------------------------------------------------------    
+ * 版权所有 (c) 2023 mailhelin@qq.com  保留所有权利。
+ *
+ * Comment 	    Vision	    Author              Date  
+ * ---------    --------    --------            -----------
+ * Created		1.0		    mailhelin@qq.com    2023/8/9 16:57:10
+ *
+ * ------------------------------------------------------------------------------*/
+
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
 using System.Net.Http;
-using System.Security.Claims;
+using System.Reflection.Emit;
+using System;
 using System.Threading.Tasks;
 
 namespace Easy.Jwt.Core
@@ -14,40 +22,35 @@ namespace Easy.Jwt.Core
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="JwtMiddleware"/> class.
-        /// </summary>
-        /// <param name="next">The next.</param>
-        /// <param name="logger">The logger.</param>
         public JwtMiddleware(RequestDelegate next, ILogger<JwtMiddleware> logger)
         {
             _next = next;
             _logger = logger;
         }
 
-        /// <summary>
-        /// Invokes the middleware.
-        /// </summary>
-        /// <param name="context">The context.</param>
-        /// <param name="router">The router.</param>
-        /// <returns></returns>
-        public async Task Invoke(HttpContext context, IRequestValidation requestValidation, IPasswordValidator passwordValidator, JwtSettings jwtSettings, ITokenGenerator generator)
+        public async Task InvokeAsync(HttpContext context, IEndpointRouter endpointRouter)
         {
             try
             {
-                var validationContext = await requestValidation.ValidateAsync(context);
+                var handler = endpointRouter.Find(context);
 
-                var validateResult = await passwordValidator.ValidateAsync(validationContext);
+                if (handler != null)
+                {
+                    _logger.LogInformation($"invoking endpoint: {handler.GetType().FullName} for {context.Request.Path}");
 
-                var tokenResult = GenerateToken(jwtSettings, generator, validationContext, validateResult);
+                    await handler.ProcessAsync(context);
 
-                await tokenResult.ExecuteAsync(context);
+                    return;
+                }
+
+                await _next(context);
             }
             catch (HttpRequestException ex)
             {
                 var res = new JwtResponse
                 {
                     Error = ex.Message,
+                    IsSuccess = false,
                 };
 
                 context.Response.StatusCode = 400;
@@ -58,48 +61,13 @@ namespace Easy.Jwt.Core
                 var res = new JwtResponse
                 {
                     Error = ex.Message,
+                    IsSuccess = false,
                 };
 
                 context.Response.StatusCode = 500;
                 await res.ExecuteAsync(context);
             }
         }
-
-        private static JwtResponse GenerateToken(JwtSettings jwtSettings, ITokenGenerator generator, PasswordValidationContext validationContext, bool validateResult)
-        {
-            var result = new JwtResponse();
-
-            if (validateResult)
-            {
-                var claims = new List<Claim>
-                {
-                    new(JwtClaimTypes.Subject, CommonHelper.NewGuid),
-                    new(JwtClaimTypes.AuthenticationTime, DateTime.Now.Ticks.ToString(), ClaimValueTypes.Integer64)
-                };
-
-                if (jwtSettings.DefaultClaims.IsPresent())
-                {
-                    claims.AddRange(jwtSettings.DefaultClaims);
-                }
-
-                if (validationContext.CustomClaims.IsPresent())
-                {
-                    claims.AddRange(validationContext.CustomClaims);
-                }
-
-                var tokenInfo = generator.GenerateToken(claims);
-                result = new JwtResponse(tokenInfo)
-                {
-                    Custom = validationContext.CustomResponse
-                };
-            }
-            else
-            {
-                result.Error = JwtConsts.JwtGenerateError.InvalidUsernameOrPassword;
-                result.Custom = validationContext.CustomResponse;
-            }
-
-            return result;
-        }
     }
 }
+

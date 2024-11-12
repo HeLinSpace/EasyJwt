@@ -11,12 +11,11 @@
 		<RepositoryUrl>https://github.com/HeLinSpace/EasyJwt</RepositoryUrl>
 		<IncludeSymbols>True</IncludeSymbols>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>8.0.2</Version>
+		<Version>8.0.3</Version>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="RSAExtensions" Version="1.1.2" />
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
 
@@ -53,6 +52,12 @@
 			<Pack>True</Pack>
 			<PackagePath>\</PackagePath>
 		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\h.general\h.general.csproj">
+			<PrivateAssets>all</PrivateAssets>
+		</ProjectReference>
 	</ItemGroup>
 
 </Project>

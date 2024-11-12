@@ -1,8 +1,8 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using h.general.extensions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
-using System.Text;
 
 namespace Easy.Jwt.Core
 {
@@ -12,6 +12,8 @@ namespace Easy.Jwt.Core
     public class JWTGenerator : ITokenGenerator
     {
         protected readonly JwtSettings _jwtSettings;
+
+        protected readonly string[] _defaultClaims = new string[] { JwtClaimTypes.Subject, JwtClaimTypes.AuthenticationTime, JwtClaimTypes.Expiration, JwtClaimTypes.NotBefore, JwtClaimTypes.Issuer, JwtClaimTypes.Audience, ClaimTypes.NameIdentifier };
 
         public JWTGenerator(JwtSettings jwtSettings)
         {
@@ -27,30 +29,44 @@ namespace Easy.Jwt.Core
         /// <param name="audience"></param>
         /// <param name="expires"></param>
         /// <returns></returns>
-        public TokenInfo GenerateToken(IEnumerable<Claim> claims)
+        public TokenInfo GenerateToken(IEnumerable<Claim> customClaims, JwtClient client)
         {
             var result = new TokenInfo { IsSuccess = false };
 
-            if (_jwtSettings.IssuerSigningKey.IsPresent())
+            var claims = new List<Claim>
             {
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_jwtSettings.IssuerSigningKey));
+                new(JwtClaimTypes.JwtId, CommonHelper.NewGuid),
+                new(JwtClaimTypes.AuthenticationTime, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
+            };
 
-                result.AccessToken = JWTHelper.GetJwtTokenHS256(key, claims, _jwtSettings.Issuer, _jwtSettings.Audience, _jwtSettings.Expires, out var expiresAt);
-                result.ExpiresAt = expiresAt;
-                result.TokenType = _jwtSettings.TokenType;
-                result.IsSuccess = true;
-            }
-            else if (_jwtSettings.PrivateKey.IsPresent())
+            var scopes = new List<string> { JwtConsts.LocalApi.ScopeName };
+
+            if (client.Scopes.IsPresent())
             {
-                result.AccessToken = JWTHelper.GetJwtTokenRS256(_jwtSettings.PrivateKey, claims, _jwtSettings.Issuer, _jwtSettings.Audience, _jwtSettings.Expires, out var expiresAt);
-                result.ExpiresAt = expiresAt;
-                result.TokenType = _jwtSettings.TokenType;
-                result.IsSuccess = true;
+                scopes.AddRange(client.Scopes);
             }
-            else
+
+            foreach (var item in scopes)
             {
-                result.Error = JwtConsts.JwtGenerateError.CredentialError;
+                claims.Add(new(JwtClaimTypes.Scope, item));
             }
+
+            if (_jwtSettings.DefaultClaims.IsPresent())
+            {
+                claims.AddRange(_jwtSettings.DefaultClaims);
+            }
+
+            var customClaimsWithoutDefault = customClaims.Where(s => !_defaultClaims.Contains(s.Type)).ToList();
+
+            if (customClaims.IsPresent())
+            {
+                claims.AddRange(customClaimsWithoutDefault);
+            }
+
+            result.AccessToken = JWTHelper.GetJwtToken(_jwtSettings.SigningCredentials, claims, _jwtSettings.Issuer, client.Audience, client.Expires ?? _jwtSettings.Expires, out var expiresAt);
+            result.ExpiresAt = expiresAt;
+            result.TokenType = _jwtSettings.TokenType;
+            result.IsSuccess = true;
 
             return result;
         }
@@ -81,20 +97,9 @@ namespace Easy.Jwt.Core
         /// <param name="token"></param>
         /// <param name="publicKey">使用RSA私钥创建令牌时必须</param>
         /// <returns></returns>
-        public JwtValidateResult VerifyJwtToken(string token, string publicKey = "")
+        public JwtValidateResult VerifyJwtToken(string token, JwtClient client)
         {
-            if (_jwtSettings.IssuerSigningKey.IsPresent())
-            {
-                return JWTHelper.VerifyJwtToken(token, _jwtSettings.IssuerSigningKey, _jwtSettings.Issuer, _jwtSettings.Audience);
-            }
-            else if (_jwtSettings.PrivateKey.IsPresent())
-            {
-                return JWTHelper.VerifyJwtTokenRSA(token, publicKey, _jwtSettings.Issuer, _jwtSettings.Audience);
-            }
-            else
-            {
-                return new JwtValidateResult { ErrorType = JwtValidateError.TokenError, Success = false };
-            }
+            return JWTHelper.VerifyJwtToken(token, _jwtSettings.SigningCredentials.Key, _jwtSettings.Issuer, client.Audience);
         }
     }
 }

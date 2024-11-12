@@ -10,6 +10,16 @@ namespace Easy.Jwt.Core
     public class PasswordValidationContext
     {
         /// <summary>
+        /// 客户端id
+        /// </summary>
+        public string ClientId { get; set; }
+
+        /// <summary>
+        /// 客户端密码
+        /// </summary>
+        public string ClientSecret { get; set; }
+
+        /// <summary>
         /// 用户名
         /// </summary>
         public string Username { get; set; }
@@ -22,12 +32,12 @@ namespace Easy.Jwt.Core
         /// <summary>
         /// form data
         /// </summary>
-        public NameValueCollection FormCollection { get; set; }
+        public NameValueCollection FormCollection { get; internal set; }
 
         /// <summary>
         /// request headers
         /// </summary>
-        public NameValueCollection Headers { get; set; }
+        public NameValueCollection Headers { get; internal set; }
 
         /// <summary>
         /// Custom fields witch will be  included in the token.
@@ -39,5 +49,6 @@ namespace Easy.Jwt.Core
         /// </summary>
         public Dictionary<string, object> CustomResponse { get; set; } = new Dictionary<string, object>();
 
+        internal JwtClient Client { get; set; }
     }
 }

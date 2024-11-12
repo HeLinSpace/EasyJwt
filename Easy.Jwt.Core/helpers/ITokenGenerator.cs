@@ -18,7 +18,7 @@ namespace Easy.Jwt.Core
         /// <param name="audience"></param>
         /// <param name="expires"></param>
         /// <returns></returns>
-        TokenInfo GenerateToken(IEnumerable<Claim> claims);
+        TokenInfo GenerateToken(IEnumerable<Claim> claims, JwtClient client);
 
         /// <summary>
         /// 解析令牌信息
@@ -38,8 +38,7 @@ namespace Easy.Jwt.Core
         /// 验证令牌
         /// </summary>
         /// <param name="token"></param>
-        /// <param name="publicKey">使用RSA私钥创建令牌时必须</param>
         /// <returns></returns>
-        JwtValidateResult VerifyJwtToken(string token, string publicKey = "");
+        JwtValidateResult VerifyJwtToken(string token, JwtClient client);
     }
 }

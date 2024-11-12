@@ -5,7 +5,9 @@ VisualStudioVersion = 17.5.33103.201
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Easy.Jwt.Core", "Easy.Jwt.Core\Easy.Jwt.Core.csproj", "{16669227-C638-49D7-BF17-A028A86B4692}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Easy.Jwt.Core.Test.Api", "Easy.Jwt.Core.Test.Api\Easy.Jwt.Core.Test.Api.csproj", "{F853C9BA-1AB7-4327-9137-E9C6D2200A3B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Easy.Jwt.Core.Test.Api", "Easy.Jwt.Core.Test.Api\Easy.Jwt.Core.Test.Api.csproj", "{F853C9BA-1AB7-4327-9137-E9C6D2200A3B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "h.general", "..\h.general\h.general.csproj", "{601C8FD8-8916-4905-A299-4F615C25D2E4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{F853C9BA-1AB7-4327-9137-E9C6D2200A3B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F853C9BA-1AB7-4327-9137-E9C6D2200A3B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F853C9BA-1AB7-4327-9137-E9C6D2200A3B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{601C8FD8-8916-4905-A299-4F615C25D2E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{601C8FD8-8916-4905-A299-4F615C25D2E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{601C8FD8-8916-4905-A299-4F615C25D2E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{601C8FD8-8916-4905-A299-4F615C25D2E4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
