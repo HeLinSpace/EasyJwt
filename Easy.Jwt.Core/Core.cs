@@ -25,6 +25,11 @@ namespace Easy.Jwt.Core
 
             configure?.Invoke(settings);
 
+            if (settings.Authority.IsPresent())
+            {
+                BusinessException.Throw(!CommonHelper.IsValidScheme(settings.Authority), "'Authority' does not contain 'Scheme' information .");
+            }
+
             BusinessException.Throw(settings.Clients.IsEmpty(), "no client hear .");
 
             serviceCollection.AddSingleton(settings);

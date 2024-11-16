@@ -21,7 +21,7 @@ namespace Easy.Jwt.Core
             _generator = generator;
         }
 
-        string IEndpointHandler.Method => "Post";
+        string IEndpointHandler.Method => "POST";
 
         string IEndpointHandler.Path => "/connect/token";
 

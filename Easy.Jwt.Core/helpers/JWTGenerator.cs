@@ -36,6 +36,7 @@ namespace Easy.Jwt.Core
             var claims = new List<Claim>
             {
                 new(JwtClaimTypes.JwtId, CommonHelper.NewGuid),
+                new(JwtClaimTypes.ClientId, client.ClientId),
                 new(JwtClaimTypes.AuthenticationTime, DateTimeOffset.UtcNow.ToUnixTimeSeconds().ToString()),
             };
 
@@ -63,8 +64,13 @@ namespace Easy.Jwt.Core
                 claims.AddRange(customClaimsWithoutDefault);
             }
 
-            result.AccessToken = JWTHelper.GetJwtToken(_jwtSettings.SigningCredentials, claims, _jwtSettings.Issuer, client.Audience, client.Expires ?? _jwtSettings.Expires, out var expiresAt);
+            var expires = client.Expires ?? _jwtSettings.Expires;
+
+            result.AccessToken = JWTHelper.GetJwtToken(_jwtSettings.SigningCredentials, claims, _jwtSettings.Issuer, client.Audience, expires, out var expiresAt);
+
             result.ExpiresAt = expiresAt;
+            result.ExpiresIn = expires;
+            result.Scope = string.Join(" ", scopes);
             result.TokenType = _jwtSettings.TokenType;
             result.IsSuccess = true;
 

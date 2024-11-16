@@ -8,20 +8,32 @@ namespace Easy.Jwt.Core
         /// <summary>
         /// token
         /// </summary>
-        [JsonPropertyName("accessToken")]
+        [JsonPropertyName("access_token")]
         public string AccessToken { get; set; }
 
         /// <summary>
         /// 有效期
         /// </summary>
-        [JsonPropertyName("expiresAt")]
+        [JsonPropertyName("expires_at")]
         public DateTime? ExpiresAt { get; set; }
+
+        /// <summary>
+        /// 有效时长
+        /// </summary>
+        [JsonPropertyName("expires_in")]
+        public long ExpiresIn { get; set; }
 
         /// <summary>
         /// token类型
         /// </summary>
-        [JsonPropertyName("tokenType")]
+        [JsonPropertyName("token_type")]
         public string TokenType { get; set; }
+
+        /// <summary>
+        /// scope
+        /// </summary>
+        [JsonPropertyName("scope")]
+        public string Scope { get; set; }
 
         /// <summary>
         /// error

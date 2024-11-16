@@ -17,6 +17,8 @@ namespace Easy.Jwt.Core
             TokenType = tokenInfo.TokenType;
             Error = tokenInfo.Error;
             IsSuccess = tokenInfo.IsSuccess;
+            ExpiresIn = tokenInfo.ExpiresIn;
+            Scope = tokenInfo.Scope;
         }
 
         [JsonExtensionData]

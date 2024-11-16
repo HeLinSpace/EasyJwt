@@ -122,7 +122,7 @@ namespace Easy.Jwt.Core.Test.Api
                         var now = DateTimeOffset.UtcNow.ToUnixTimeSeconds();
 
                         // 计算是否超过有效期的 70%
-                        if ((now - nbf) > (exp - nbf) * 0.7)
+                        //if ((now - nbf) > (exp - nbf) * 0.7)
                         {
                             // 需要刷新 token
                             var client = _httpClientFactory.CreateClient("NoCertificate");

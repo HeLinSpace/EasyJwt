@@ -19,7 +19,7 @@ namespace Easy.Jwt.Core
             _jwtSettings = jwtSettings;
         }
 
-        string IEndpointHandler.Method => "Get";
+        string IEndpointHandler.Method => "GET";
 
         string IEndpointHandler.Path => "/.well-known/openid-configuration";
 
@@ -27,11 +27,13 @@ namespace Easy.Jwt.Core
 
         public async Task ProcessAsync(HttpContext context)
         {
+            var domain = CommonHelper.RemoveTrailingSlash(_jwtSettings.Authority ?? $"{context.Request.Scheme}://{context.Request.Host.Value}");
+
             var entries = new Dictionary<string, object>
             {
-                { "issuer", "http://localhost:22002/" },
-                { "jwks_uri", "http://localhost:22002/.well-known/openid-configuration/jwks" },
-                { "token_endpoint", "http://localhost:22002/connect/token" },
+                { "issuer", _jwtSettings.Issuer },
+                { "jwks_uri", $"{domain}/.well-known/openid-configuration/jwks" },
+                { "token_endpoint", $"{domain}/connect/token" },
             };
 
             var json = ObjectSerializer.Serialize(entries);

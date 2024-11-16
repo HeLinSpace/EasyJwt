@@ -22,7 +22,7 @@ namespace Easy.Jwt.Core
             _jwtSettings = jwtSettings;
         }
 
-        string IEndpointHandler.Method => "Get";
+        string IEndpointHandler.Method => "GET";
 
         string IEndpointHandler.Path => "/.well-known/openid-configuration/jwks";
 

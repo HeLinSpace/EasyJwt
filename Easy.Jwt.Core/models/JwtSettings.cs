@@ -27,6 +27,12 @@ namespace Easy.Jwt.Core
         public string Issuer { get; set; }
 
         /// <summary>
+        /// auth server domain
+        /// default HttpContext.Request.Host
+        /// </summary>
+        public string Authority { get; set; }
+
+        /// <summary>
         /// expires on（seconds），default 8 hours
         /// </summary>
         public int Expires { get; set; }

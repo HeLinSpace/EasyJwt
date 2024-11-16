@@ -169,6 +169,16 @@ namespace Easy.Jwt.Core
             return false;
         }
 
+        public static bool IsValidScheme(string url)
+        {
+            var success = Uri.TryCreate(url, UriKind.Absolute, out var uri);
+            if (success == false)
+            {
+                return false;
+            }
+
+            return IsValidScheme(uri);
+        }
 
         [DebuggerStepThrough]
         internal static string RemoveTrailingSlash(string url)

@@ -69,7 +69,9 @@
         public const string EmailVerified = "email_verified";
         
         public const string Scope = "scope";
-        
+
+        public const string ClientId = "client_id";
+
     }
 
     /// <summary>

@@ -33,6 +33,7 @@ namespace Easy.Jwt.Core
         /// <summary>
         /// Custom fields for the token request
         /// </summary>
+        [JsonExtensionData]
         public Dictionary<string, object> CustomProperty { get; set; } = new Dictionary<string, object>();
     }
 }
