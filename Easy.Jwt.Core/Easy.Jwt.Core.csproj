@@ -11,10 +11,11 @@
 		<RepositoryUrl>https://github.com/HeLinSpace/EasyJwt</RepositoryUrl>
 		<IncludeSymbols>True</IncludeSymbols>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>8.0.3.4</Version>
+		<Version>8.0.3.5</Version>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+		<PackageReleaseNotes>添加 clientfunc 提供IServiceProvider参数，以支持更多的方式管理clients</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>

@@ -21,6 +21,11 @@ namespace Easy.Jwt.Core
         public IEnumerable<JwtClient> Clients { get; set; }
 
         /// <summary>
+        /// clients settings
+        /// </summary>
+        public Func<IServiceProvider, IEnumerable<JwtClient>> ClientFunc { get; set; }
+
+        /// <summary>
         /// issuer
         /// default *
         /// </summary>

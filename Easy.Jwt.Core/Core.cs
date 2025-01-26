@@ -30,7 +30,7 @@ namespace Easy.Jwt.Core
                 BusinessException.Throw(!CommonHelper.IsValidScheme(settings.Authority), "'Authority' does not contain 'Scheme' information .");
             }
 
-            BusinessException.Throw(settings.Clients.IsEmpty(), "no client hear .");
+            BusinessException.Throw(settings.Clients.IsEmpty() && settings.ClientFunc.IsEmpty(), "no client hear .");
 
             serviceCollection.AddSingleton(settings);
             serviceCollection.AddScoped<IRequestValidator, RequestValidation>();
@@ -64,6 +64,12 @@ namespace Easy.Jwt.Core
             var requestValidations = scope.ServiceProvider.GetService<IRequestValidator>();
             var passwordValidators = scope.ServiceProvider.GetService<IPasswordValidator>();
             var jwtSettings = scope.ServiceProvider.GetService<JwtSettings>();
+
+            if (jwtSettings.ClientFunc.IsPresent())
+            {
+                jwtSettings.Clients = jwtSettings.ClientFunc.Invoke(app.ApplicationServices);
+                BusinessException.Throw(jwtSettings.Clients.IsEmpty(), "no client hear .");
+            }
 
             if (requestValidations == null || jwtSettings == null)
             {
