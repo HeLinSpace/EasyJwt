@@ -9,7 +9,7 @@ namespace Easy.Jwt.Core
     /// <summary>
     /// Jwt 令牌生成、校验（RSA）
     /// </summary>
-    public class JWTGenerator : ITokenGenerator
+    internal class JWTGenerator : ITokenGenerator
     {
         protected readonly JwtSettings _jwtSettings;
 

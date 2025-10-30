@@ -14,7 +14,7 @@ namespace Easy.Jwt.Core
     /// <summary>
     /// The endpoint router
     /// </summary>
-    public interface IEndpointRouter
+    internal interface IEndpointRouter
     {
         /// <summary>
         /// Finds a matching endpoint.

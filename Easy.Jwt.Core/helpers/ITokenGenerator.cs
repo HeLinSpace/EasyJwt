@@ -7,7 +7,7 @@ namespace Easy.Jwt.Core
     /// <summary>
     /// Jwt 令牌生成
     /// </summary>
-    public interface ITokenGenerator
+    internal interface ITokenGenerator
     {
         /// <summary>
         /// 

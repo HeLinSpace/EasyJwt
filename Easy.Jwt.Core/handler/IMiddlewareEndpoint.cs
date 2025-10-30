@@ -11,7 +11,7 @@ using System.Net.Http;
 
 namespace Easy.Jwt.Core
 {
-    public interface IMiddlewareEndpoint
+    internal interface IMiddlewareEndpoint
     {
         string Method { get; }
 

@@ -15,7 +15,7 @@ using System.Linq;
 
 namespace Easy.Jwt.Core
 {
-    public class EndpointRouter : IEndpointRouter
+    internal class EndpointRouter : IEndpointRouter
     {
         private readonly ILogger _logger;
         private readonly IEnumerable<IEndpointHandler> _handlers;

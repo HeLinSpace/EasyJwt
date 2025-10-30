@@ -16,7 +16,7 @@ namespace Easy.Jwt.Core
     /// <summary>
     /// Endpoint handler
     /// </summary>
-    public interface IEndpointHandler
+    internal interface IEndpointHandler
     {
         public string Method { get; }
 
