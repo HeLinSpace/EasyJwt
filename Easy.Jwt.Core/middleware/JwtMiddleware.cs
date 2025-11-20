@@ -42,8 +42,6 @@ namespace Easy.Jwt.Core
 
                     return;
                 }
-
-                await _next(context);
             }
             catch (HttpRequestException ex)
             {
@@ -67,6 +65,7 @@ namespace Easy.Jwt.Core
                 context.Response.StatusCode = 500;
                 await res.ExecuteAsync(context);
             }
+            await _next(context);
         }
     }
 }
