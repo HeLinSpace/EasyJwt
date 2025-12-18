@@ -49,6 +49,9 @@ namespace Easy.Jwt.Core
         /// </summary>
         public Dictionary<string, object> CustomResponse { get; set; } = new Dictionary<string, object>();
 
-        internal JwtClient Client { get; set; }
+        /// <summary>
+        /// 当前认证客户端
+        /// </summary>
+        public JwtClient Client { get; internal set; }
     }
 }
