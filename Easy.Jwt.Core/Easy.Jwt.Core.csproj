@@ -11,11 +11,11 @@
 		<RepositoryUrl>https://github.com/HeLinSpace/EasyJwt</RepositoryUrl>
 		<IncludeSymbols>True</IncludeSymbols>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
-		<Version>8.0.3.9</Version>
+		<Version>8.0.3.10</Version>
 		<SymbolPackageFormat>snupkg</SymbolPackageFormat>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-		<PackageReleaseNotes>允许使用对称加密</PackageReleaseNotes>
+		<PackageReleaseNotes>修复发生请求异常时中断中间件</PackageReleaseNotes>
 	</PropertyGroup>
 
 	<ItemGroup>
